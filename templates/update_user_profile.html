@@ -75,14 +75,18 @@ $(document).ready(function(){
                 <div class="pt-4 pb-2">
                     <h4 class="text-success text-center ms-3">Edit Your Profile</h4>
                 </div>
-                <div class="mb-2"> 
+                <div class="mb-2">
+                    <label class="ms-2 mb-1">Name</label>
                     <input type="text" name="name" class="form-control mb-2" value="{{v.name}}" placeholder="Name">
+                    <label class="ms-2 mb-1">Phone</label>
                     <input type="text" name="phone" class="form-control mb-2" value="{{v.phone}}" placeholder="Phone">
                 </div>            
                 <div class="mb-2">
+                  <label class="ms-2 mb-1">Address</label>
                     <textarea name="address" class="form-control" cols="30" rows="5" placeholder="Your address">{{v.address}}</textarea>
                 </div>
                 <div class="mb-2">
+                  <label class="ms-2 mb-1">Gender</label>
                     {% if v.gender == 'male' %}
                     <div>
                         <input type="radio" class="form-check-input" name="gender" value="male" checked="true"> Male
@@ -96,6 +100,7 @@ $(document).ready(function(){
                     {% endif %}
                 </div>
                 <div class="mb-2">
+                    <label class="ms-2 mb-1">Country</label>
                     <select name="country" id="country" class="form-select" aria-label="">
                         <option value="{{v.countryid}}">{{v.countryid.countryname}}</option>
                         {% for c in countries %}
@@ -104,21 +109,24 @@ $(document).ready(function(){
                     </select>
                 </div>
                 <div class="mb-2">
+                  <label class="ms-2 mb-1">State</label>
                     <select name="state" id="state" class="form-select" aria-label="">
                         <option value="">{{v.stateid.statename}}</option>
                     </select>
                 </div>
                 <div class="mb-2">
+                  <label class="ms-2 mb-1">Security Question</label>
                     <select name="securityquestion" class="form-select">
-                        <option value="">{{v.security_questions}}</option>
-                        <option value="father-name">What's your father name</option>	
-                        <option value="mother-name">What's your mother name</option>	
-                        <option value="favorite-sport">Your Favorite Sports</option>	
-                        <option value="favorite-movie">Your Favorite Movie</option>
-                        <option value="lucky-number">Lucky Number</option>	
+                        <option value="{{v.security_questions}}">{{v.security_questions}}</option>
+                        <option value="Father Name">Father Name</option>	
+                        <option value="Mother Name">Mother Name</option>	
+                        <option value="Favorite Sport">Favorite Sport</option>	
+                        <option value="Favorite Movie">Favorite Movie</option>
+                        <option value="Lucky Number">Lucky Number</option>	
                     </select>
                 </div>
                 <div class="mb-2">
+                  <label class="ms-2 mb-1">Answer</label>
                     <input type="text" class="form-control" name="answer" value="{{v.answers}}" placeholder="Answer">
                 </div>
                 <div class="mb-2">
@@ -138,9 +146,11 @@ $(document).ready(function(){
                     <input type="date" name="dob" value="{{v.dob}}" class="form-control">
                 </div>
                 <div class="mb-2">
+                  <label class="ms-2 mb-1">username</label>
                     <input type="text" class="form-control" name="username" value="{{v.username}}" id="username" placeholder="Username">
                 </div>
                 <div class="mb-2 mb-4">
+                  <label class="ms-2 mb-1">Password</label>
                     <input type="password" class="form-control" name="password" value="{{v.password}}" id="password" title="Password" placeholder="Password">
                 </div>
                 <div class="ms-5 mb-4 d-flex justify-content-evenly">
