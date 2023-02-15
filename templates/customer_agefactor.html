@@ -1,0 +1,83 @@
+<html>
+    <head>
+        <title>Hobby Factor</title>
+		<link rel="stylesheet" href="/static/css/bootstrap.css">
+		<script src="/static/js/bootstrap.js"></script>
+	</head>
+    <body>
+        <header class="bg-success bg-gradient">
+            <div class="text-white p-2">
+              <nav class="navbar navbar-expand-lg">
+                <div class="container-fluid">
+                  <a class="navbar-brand text-white" href="{% url 'userhome' %}"><h4>SpamMail</h4></a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                      <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                          <a class="nav-link active text-white" aria-current="page" href="{% url 'userhome' %}">Home</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Customer Factor
+                          </a>
+                          <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{% url 'customer_hobbyfactor' %}">Customer hobby factor</a></li>
+                            <li><a class="dropdown-item" href="{% url 'customer_agefactor' %}">Customer age factor</a></li>
+                            <li><a class="dropdown-item" href="{% url 'customer_seasoncountryfactor' %}">Customer season-country factor</a></li>
+                          </ul>
+                        </li>
+                      </ul>
+                      <ul class="navbar-nav my-auto me-2">
+                      <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          Profile
+                        </a>
+                        <ul class="dropdown-menu">
+                          <li><a class="dropdown-item" href="#">View Profile</a></li>
+                          <li><a class="dropdown-item" href="{% url 'update_user_profile' %}">Update Profile</a></li>
+                          <li><a class="dropdown-item" href="{% url 'logout' %}">Log Out</a></li>
+                        </ul>
+                      </li>
+                      </ul>
+                      <img src="/static/profile.jpg" width="50px" height="50px" class="rounded-circle ms-2">
+                    </div>
+                  </div>
+              </nav>
+            </div>
+          </header>
+        <div class="container">
+            <div class="row mb-2 ">
+                <div class="col-sm-12 col-md-12 col-lg-12 mt-5 mb-5 mt-3 card ">
+                    <form method="post" action="{% url 'customer_agefactorAction' %}">
+                        {% csrf_token %}
+                    <div class="pt-4 mb-5">
+                        <h4 class="text-success text-center">Age Factor</h4>
+                    </div>
+                    <div class="mb-4">
+                        <select name="hobby" id="hobby" class="form-control">
+                            <option value="">Select Hobby</option>
+                            {% for v in view %}
+                        <option value="{{v.id}}">{{v.age_factor}}</option>
+                        {% endfor %}
+                        </select>
+                    </div>
+                    <div class="d-flex justify-content-evenly">
+                        <button class="btn bg-success text-white">Submit</button>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <footer class="bg-success" style="--bs-bg-opacity: .5;">
+            <div class="container">
+              <div class="row">
+                <div class="col-md-12 text-center p-5">
+                  <p>Copyrights 2023 SpamMail, Inc</p>
+                </div>    
+              </div>
+            </div>
+        </footer>
+    </body>
+</html>

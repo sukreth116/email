@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/static/css/bootstrap.css">
+	  <script src="/static/js/bootstrap.js"></script>
+</head>
+<script src="/static/jquery-1.8.3.min.js"></script>
+<script>
+$(document).ready(function(){
+	$("#country").change(function(){
+	var country = $("#country").val();
+	$.ajax({
+		url : "{% url 'getstate' %}",
+		data : {'country' : country},
+		success : function(data)
+		{
+			$("#state").html(data);
+		}
+	})
+	})
+	})
+</script>
+<header class="bg-success bg-gradient">
+    <div class="text-white p-2">
+      <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+          <a class="navbar-brand text-white" href="{% url 'userhome' %}"><h4>SpamMail</h4></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                  <a class="nav-link active text-white" aria-current="page" href="{% url 'userhome' %}">Home</a>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Customer Factor
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="{% url 'customer_hobbyfactor' %}">Customer hobby factor</a></li>
+                    <li><a class="dropdown-item" href="{% url 'customer_agefactor' %}">Customer age factor</a></li>
+                    <li><a class="dropdown-item" href="{% url 'customer_seasoncountryfactor' %}">Customer season-country factor</a></li>
+                  </ul>
+                </li>
+              </ul>
+              <ul class="navbar-nav my-auto me-2">
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Profile
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="#">View Profile</a></li>
+                  <li><a class="dropdown-item" href="{% url 'update_user_profile' %}">Update Profile</a></li>
+                  <li><a class="dropdown-item" href="{% url 'logout' %}">Log Out</a></li>
+                </ul>
+              </li>
+              </ul>
+              <img src="/static/profile.jpg" width="50px" height="50px" class="rounded-circle ms-2">
+            </div>
+          </div>
+      </nav>
+    </div>
+  </header>
+<body>
+    <div class="container">
+        <div class="row mb-2 ">
+            <div class="col-sm-12 col-md-12 col-lg-12 mt-5 card shadow">
+				<form method="post" action="{% url 'update_user_profileAction' %}">
+					{% csrf_token %}
+                    {% for v in view %}
+                <div class="pt-4 pb-2">
+                    <h4 class="text-success text-center ms-3">Edit Your Profile</h4>
+                </div>
+                <div class="mb-2"> 
+                    <input type="text" name="name" class="form-control mb-2" value="{{v.name}}" placeholder="Name">
+                    <input type="text" name="phone" class="form-control mb-2" value="{{v.phone}}" placeholder="Phone">
+                </div>            
+                <div class="mb-2">
+                    <textarea name="address" class="form-control" cols="30" rows="5" placeholder="Your address">{{v.address}}</textarea>
+                </div>
+                <div class="mb-2">
+                    {% if v.gender == 'male' %}
+                    <div>
+                        <input type="radio" class="form-check-input" name="gender" value="male" checked="true"> Male
+                        <input type="radio" class="form-check-input" name="gender" value="female"> Female
+                    </div>
+                    {% else %}
+                    <div>
+                        <input type="radio" class="form-check-input" name="gender" value="male"> Male
+                        <input type="radio" class="form-check-input" name="gender" value="female" checked="true"> Female
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="mb-2">
+                    <select name="country" id="country" class="form-select" aria-label="">
+                        <option value="{{v.countryid}}">{{v.countryid.countryname}}</option>
+                        {% for c in countries %}
+		                <option value="{{c.id}}">{{c.countryname}}</option>
+		                    {% endfor %}
+                    </select>
+                </div>
+                <div class="mb-2">
+                    <select name="state" id="state" class="form-select" aria-label="">
+                        <option value="">{{v.stateid.statename}}</option>
+                    </select>
+                </div>
+                <div class="mb-2">
+                    <select name="securityquestion" class="form-select">
+                        <option value="">{{v.security_questions}}</option>
+                        <option value="father-name">What's your father name</option>	
+                        <option value="mother-name">What's your mother name</option>	
+                        <option value="favorite-sport">Your Favorite Sports</option>	
+                        <option value="favorite-movie">Your Favorite Movie</option>
+                        <option value="lucky-number">Lucky Number</option>	
+                    </select>
+                </div>
+                <div class="mb-2">
+                    <input type="text" class="form-control" name="answer" value="{{v.answers}}" placeholder="Answer">
+                </div>
+                <div class="mb-2">
+                    <div>Hobbies</div>
+                    {% for s in hobby %}
+                    <div class="ms-5"><input type="checkbox" class="form-check-input" {% for h in userhobby %} name="hobbies" value="{{s.id}}"
+                    {% if s.id == h.hobbyid.id %} 
+                    checked = "true" 
+                    {% endif %} 
+                    {% endfor %}>
+                    {{s.hobby}}
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="mb-2">
+                    <label for="dob" class="ms-3">Date of Birth</label>
+                    <input type="date" name="dob" value="{{v.dob}}" class="form-control">
+                </div>
+                <div class="mb-2">
+                    <input type="text" class="form-control" name="username" value="{{v.username}}" id="username" placeholder="Username">
+                </div>
+                <div class="mb-2 mb-4">
+                    <input type="password" class="form-control" name="password" value="{{v.password}}" id="password" title="Password" placeholder="Password">
+                </div>
+                <div class="ms-5 mb-4 d-flex justify-content-evenly">
+                    <button class="btn btn-success" type="submit">Update</button>
+                </div>
+                {% endfor %}
+				</form>
+            </div>
+        </div>
+	</div>
+    <footer class="bg-success" style="--bs-bg-opacity: .5;">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12 text-center text-white p-5">
+              <p>Copyrights <i class="fa-regular fa-copyright"></i> 2023 SpamMail, Inc</p>
+              <i class="fa-brands fa-facebook fa-2x"></i>  <i class="fa-brands fa-instagram fa-2x"></i>
+              
+              <i class="fa-brands fa-twitter fa-2x"></i>
+            </div>
+        </div>
+    </div>    
+    </footer>
+
+    <script src="https://kit.fontawesome.com/09fc86d1e6.js" crossorigin="anonymous"></script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpamMail</title>
+    <link rel="stylesheet" href="/static/css/bootstrap.css">
+    <script src=""></script>
+</head>
+<header class="bg-success bg-gradient">
+    <div class="text-white p-2">
+      <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+          <a class="navbar-brand text-white" href="{% url 'index' %}"><h4>SpamMail</h4></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+          </div>
+      </nav>
+    </div>
+</header>
+<body>
+  <div class="container">
+		<div class="row mb-2 mt-5 mb-5">
+			<div class="col-sm-12 col-md-12 col-lg-12 col-12 card mb-5">
+				<form method="post" action="{% url 'loginAction' %}">
+					{% csrf_token %}
+				<div class="pt-4 pb-2">
+					<h4 class="text-success text-center ms-3">Welcome Back</h4>
+				</div>
+				<div class="mb-2">
+					<input type="text" class="form-control" name="username" placeholder="Username               (for admin: 'admin',for user: 'sample@mymail.com'">
+				</div>
+				<div class="mb-2">
+					<input type="password" class="form-control" name="password" placeholder="Password                (for admin: '123', for user: 'sample')">
+				</div>
+				<div class="mb-2">
+					<a class="ms-5" style="text-decoration: none;" href="{% url 'forgotpassword' %}">Forgot password?</a>
+				</div>
+				<div class="mb-3 mt-5 d-flex justify-content-evenly">
+					<button class="btn btn-success" type="submit">Login</button>
+				</div>
+        <p class="text-center">Don't have an account <a href="{% url 'userregister' %}">sign up</a> here</p>
+				</form>
+			</div>  
+		</div>
+	</div>
+</div>
+</body>
+<footer class="bg-success fixed-bottom" style="--bs-bg-opacity: .5;">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 text-center text-white p-5">
+          <p>Copyrights 2023 SpamMail, Inc</p>
+        </div>
+      </div>
+    </div>    
+  </footer>
+</html>
+
+
+
+
+
+
+
+
+
+

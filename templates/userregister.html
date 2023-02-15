@@ -1,0 +1,137 @@
+<html>
+	<head>
+        <title>Registration</title>
+		<link rel="stylesheet" href="/static/css/bootstrap.css">
+		<script src="/static/jquery-1.8.3.min.js"></script>
+	</head>
+	<script>
+		$(document).ready(function(){
+		$("#country").change(function(){
+		var country = $("#country").val();
+		$.ajax({
+			url : "{% url 'getstate' %}",
+			data : {'country' : country},
+			success : function(data)
+			{
+				$("#state").html(data);
+			}
+		})
+		})
+		})
+		</script>
+	
+		<script>
+		$(document).ready(function(){
+		$("#username").change(function(){
+		var username = $("#username").val();
+		$.ajax({
+			url : "{% url 'checkusername' %}",
+			data : {'usernameid' : username},
+			success : function(data){
+			if(data.valid == "exist")
+			{
+				alert("username already exist")
+				$("#username").val();	
+			}
+		}
+		})
+		})	
+		})
+		</script>
+
+<body>
+	<header class="bg-success bg-gradient">
+        <div class="text-white p-2">
+          <nav class="navbar navbar-expand-lg">
+            <div class="container-fluid">
+              <a class="navbar-brand text-white" href="{% url 'index' %}"><h4>SpamMail</h4></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+              </div>
+          </nav>
+        </div>
+      </header>
+
+	<div class="container">
+        <div class="row mb-2 ">
+            <div class="col-sm-12 col-md-12 col-lg-12 mt-5 card ">
+				<form method="post" action="{% url 'userRegisterAction' %}">
+					{% csrf_token %}
+                <div class="pt-4 pb-2">
+                    <h4 class="text-success text-center ms-3">Create New Account</h4>
+                </div>
+                <div class="mb-2"> 
+                    <input type="text" name="name" class="form-control mb-2" placeholder="Name">
+                    <input type="text" name="phone" class="form-control mb-2" placeholder="Phone">
+                </div>            
+                <div class="mb-2">
+                    <textarea name="address" class="form-control" cols="30" rows="5" placeholder="Your address"></textarea>
+                </div>
+                <div class="mb-2">
+                    <input type="radio" name="gender" class="form-check-input">
+                    <label for="gender" class="form-check-label">Female</label>
+                    <input type="radio" name="gender" class="form-check-input">
+                    <label for="gender" class="form-check-label">Male</label>
+                </div>
+                <div class="mb-2">
+                    <select name="country" id="country" class="form-select" aria-label="">
+                        <option value="">Select your country</option>
+                        {% for c in country %}
+		                <option value="{{c.id}}">{{c.countryname}}</option>
+		                {% endfor %}
+                    </select>
+                </div>
+                <div class="mb-2">
+                    <select name="state" id="state" class="form-select" aria-label="">
+                        <option value="">Select your state</option>
+                    </select>
+                </div>
+                <div class="mb-2">
+                    <select name="securityquestion" class="form-select">
+                        <option value="">Security Questions</option>
+                        <option value="father-name">What's your father name</option>	
+                        <option value="mother-name">What's your mother name</option>	
+                        <option value="favorite-sport">Your Favorite Sports</option>	
+                        <option value="favorite-movie">Your Favorite Movie</option>
+                        <option value="lucky-number">Lucky Number</option>	
+                    </select>
+                </div>
+                <div class="mb-2">
+                    <input type="text" class="form-control" name="answer" placeholder="Answer">
+                </div>
+                <div class="mb-2">
+                    <label class="ms-3">Hobbies</label>
+                    {% for v in hobby %}
+	                <div class="ms-5"><input type="checkbox" class="form-check-input ms-4" name="checkbox" value="{{v.id}}"> {{v.hobby}}</div>
+	                {% endfor %}
+                </div>
+                <div class="mb-2">
+                    <label for="dob" class="ms-3">Date of Birth</label>
+                    <input type="date" name="dob" class="form-control">
+                </div>
+                <div class="mb-2">
+                    <input type="text" class="form-control" name="username" id="username" placeholder="Username">
+                </div>
+                <div class="mb-2">
+                    <input type="password" class="form-control" name="password" id="password" title="Password" placeholder="Password">
+                </div>
+                <div class="ms-5 mb-2 d-flex justify-content-evenly">
+                    <button class="btn btn-success" type="submit">Sign Up</button>
+                </div>
+				</form>
+            </div>
+        </div>
+	</div>
+
+	<footer class="bg-success" style="--bs-bg-opacity: .5;">
+			<div class="container">
+			  <div class="row">
+				<div class="col-md-12 text-center text-white p-5">
+				  <p>Copyrights 2023 SpamMail, Inc</p>
+				</div>
+            </div>
+		</div>    
+	</footer>
+</body>
+</html>

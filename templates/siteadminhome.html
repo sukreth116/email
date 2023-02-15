@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin</title>
+    <link rel="shortcut icon" href="/static/inbox.jpg" type="image/x-icon">
+    <link rel="stylesheet" href="/static/css/bootstrap.css">
+    <script src="/static/js/bootstrap.js"></script>
+</head>
+<body>
+    <header class="bg-warning bg-gradient">
+        <div class="text-white p-2">
+          <nav class="navbar navbar-expand-lg">
+            <div class="container-fluid">
+              <a class="navbar-brand text-white" href="{% url 'siteadminhome' %}"><h4>SpamMail</h4></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                  <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                      <a class="nav-link active text-white" aria-current="page" href="{% url 'siteadminhome' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link active text-white" aria-current="page" href="{% url 'userlist' %}">Userlist</a>
+                    </li>
+                  </ul>
+                  <ul class="navbar-nav my-auto me-2">
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Administrator
+                    </a>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="{% url 'logout' %}">Log Out</a></li>
+                    </ul>
+                  </li>
+                  </ul>
+                  <img src="/static/profile.jpg" width="50px" height="50px" class="rounded-circle ms-2">
+                </div>
+              </div>
+          </nav>
+        </div>
+      </header>
+    <section class="bg-success-subtle">
+        <div class="container p-3 pt-5">
+            <h3 class="text-center text-warning mb-4">Admin Home</h3>
+          <div class="row">
+            <div class="col-lg-4 col-md-6 d-flex justify-content-evenly">
+              <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                  <h5 class="card-title">Hobby</h5>
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                  <a href="{% url 'addhobby' %}" class="btn btn-warning">Add Hobby</a>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-6 d-flex justify-content-evenly">
+              <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                  <h5 class="card-title">Season</h5>
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                  <a href="{% url 'addseason' %}" class="btn btn-warning">Add Season</a>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-6 d-flex justify-content-evenly">
+              <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                  <h5 class="card-title">Season Country</h5>
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                  <a href="{% url 'seasoncountry' %}" class="btn btn-warning">Add Season Country</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="container p-3">
+          <div class="row">
+            <div class="col-lg-4 d-flex justify-content-evenly">
+              <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                  <h5 class="card-title">Hobby Factor</h5>
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                  <a href="{% url 'hobbyfactor' %}" class="btn btn-warning">Add Hobby Factor</a>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 d-flex justify-content-evenly">
+              <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                  <h5 class="card-title">Season Factor</h5>
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                  <a href="{% url 'seasonfactor' %}" class="btn btn-warning">Add Season Factor</a>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 d-flex justify-content-evenly">
+                <div class="card" style="width: 18rem;">
+                  <div class="card-body">
+                    <h5 class="card-title">Age Factor</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <a href="{% url 'agefactor' %}" class="btn btn-warning">Add Age Factor</a>
+                  </div>
+                </div>
+              </div>
+          </div>
+        </div>
+      </section>
+      <footer class="bg-warning" style="--bs-bg-opacity: .5;">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12 text-center p-5">
+              <p>Copyrights 2023 SpamMail, Inc</p>
+            </div>
+          </div>
+        </div>    
+      </footer>
+</body>
+</html>

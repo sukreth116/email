@@ -1,0 +1,15 @@
+<html>
+<body>
+<table>
+	<tr>
+	<td>Factor</td>
+	<td><select name="seasonfactor">
+		<option value="">Select season factor</option>
+		{% for s in sfact %}
+		<option value="{{s.id}}">{{s.seasonfactor}}</option>
+		{% endfor %}
+	</select></td>
+	</tr>
+</table>
+</body>
+</html>
