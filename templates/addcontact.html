@@ -1,0 +1,132 @@
+<html>
+  <head>
+    <title>New Contact</title>
+	  <link rel="stylesheet" href="/static/css/bootstrap.css">
+    <link rel="stylesheet" href="/static/style.css">
+		<script src="/static/js/bootstrap.js"></script>
+    </head>
+    <script src="/static/jquery-1.8.3.min.js"></script>
+    <script>
+    $(document).ready(function(){
+      $("#contact").change(function(){
+        var contact = $("#contact").val();
+        $.ajax({
+          url : "{% url 'check_username_contact' %}",
+          data : {'contact' : contact},
+          success : function(data){
+          if(data.valid == "not exist")
+          {
+            alert("contact not exist")
+            $("#contact").val();
+          }
+        }
+      })
+    })
+  })
+  </script>
+<body class="bg-black">
+	<header class="bg-black fixed-top">
+		<div class="py-2">
+		  	<nav class="navbar navbar-expand-lg label bg-black" data-bs-theme="dark">
+				<div class="container">
+			  		<a class="navbar-brand fs-4 text-white" href="{% url 'userhome' %}"><span style="color: #ff7800;">MY</span> MAIL</a>
+				  	<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+				  	</button>
+				  	<div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
+					<ul class="navbar-nav mb-2 mb-lg-0">
+					  	<li class="nav-item">
+							<a class="nav-link nav-color" aria-current="page" href="{% url 'userhome' %}">Home</a>
+					  	</li>
+					  	<li class="nav-item">
+							<a class="nav-link nav-color" href="#">About</a>
+					  	</li>
+					  	<li class="nav-item">
+							<a class="nav-link nav-color" href="#">Services</a>
+					  	</li>
+					  	<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle nav-color" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+						  		Factors
+							</a>
+							<ul class="dropdown-menu dropdown-menu-dark">
+						  		<li><a class="dropdown-item" href="{% url 'customer_hobbyfactor' %}">Hobby Factor</a></li>
+						  		<li><a class="dropdown-item" href="{% url 'customer_agefactor' %}">Age Factor</a></li>
+						  		<li><a class="dropdown-item" href="{% url 'customer_seasoncountryfactor' %}">Season-Country Factor</a></li>
+							</ul>
+					  	</li>
+			  			<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle nav-color" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+				  				Message
+							</a>
+							<ul class="dropdown-menu dropdown-menu-dark">
+				  				<li><a class="dropdown-item" href="{% url 'new_message' %}">New Mail</a></li>
+				  				<li><a class="dropdown-item" href="{% url 'sent_message' %}">Sent Mail</a></li>
+				  				<li><a class="dropdown-item" href="{% url 'inbox' %}">Inbox</a></li>
+				  				<li><a class="dropdown-item" href="{% url 'view_spam_messages' %}">Spam</a></li>
+				  				<li><a class="dropdown-item" href="{% url 'trash' %}">Trash</a></li>
+							</ul>
+						</li>
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle nav-color" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+				  				Your Contacts
+							</a>
+							<ul class="dropdown-menu dropdown-menu-dark">
+				  				<li><a class="dropdown-item" href="{% url 'addcontact' %}">New Contact</a></li>
+				  				<li><a class="dropdown-item" href="{% url 'addblacklist' %}">Block Contact</a></li>
+				  				<li><a class="dropdown-item" href="{% url 'viewcontacts' %}">Contacts list</a></li>
+								  <li><a class="dropdown-item" href="{% url 'viewblacklist' %}">Blacklist</a></li>
+							</ul>
+						</li>
+					  	<li class="nav-item">
+							<a class="nav-link nav-color" href="#">Contact Us</a>
+					 	</li>
+					</ul>
+				    </div>
+				  	<div class=""> 
+						<ul class="navbar-nav me-2">
+					  		<li class="nav-item">
+								<a class="nav-link nav-color" href="{% url 'update_user_profile' %}">Profile</a>
+					  		</li>
+					  		<li>
+								<a class="nav-link nav-color" href="{% url 'logout' %}">Log Out</a>
+					  		</li>
+						</ul>
+				  	</div>
+				</div>
+		    </nav>
+		</div>
+	</header>
+    <div class="container w-25 section-2">
+			<form method="post" action="{% url 'addcontactAction' %}">
+				{% csrf_token %}
+				<div class="mb-4">
+					<h2 class="label text-center col-orange">New Contact</h2>
+				</div>
+				<div class="mb-3">
+					<input type="text" class="form-control bg-dark text-white" name="contact" placeholder="Contact ID">
+				</div>
+				<div class="mb-3">
+					<input type="text" class="form-control bg-dark text-white" name="name" placeholder="Name">
+				</div>
+				<div class="mb-3">
+					<textarea name="remarks" class="form-control bg-dark text-white" cols="21" rows="4" placeholder="Remarks"></textarea>
+				</div>
+				<div class="mt-5 d-flex justify-content-evenly">
+					<button class="btn btn1" type="submit">Save Contact</button>
+				</div>
+			</form>
+		</div>
+    <footer class="container fixed-bottom py-5 border-top border-light">
+      <div class="text-white text-center opacity-75">
+        <i class="fa-regular fa-copyright"></i> 2022 My Mail. All Rights Reserved
+      </div>
+    </footer>
+</body>
+{% if messages %}
+{% for msg in messages %}
+<script>
+alert("{{msg}}")
+</script>
+{% endfor %}
+{% endif %}
+</html>

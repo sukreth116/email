@@ -1,0 +1,16 @@
+<html>
+<body>
+<table>
+	<tr>
+	<td>State</td>
+	<td><select name="state">
+		<option value="">Select your state</option>	
+		{% for s in state %}
+		<option value="{{s.id}}">{{s.statename}}</option>
+		{% endfor %}
+	</select></td>
+	</tr>
+</table>
+</body>
+</html>
+

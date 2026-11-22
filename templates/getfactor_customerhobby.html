@@ -1,0 +1,15 @@
+<html>
+    <body>
+        <table>
+            <tr>
+                <td><select name="hobbyfactor">
+                    <option value="">--select--</option>
+                    {% for v in view %}
+                    <option value="{{v.id}}">{{v.factor}}</option>
+                    {% endfor %}
+                </select></td>
+            </tr>
+        </table>
+    </body>
+</html>
+                    

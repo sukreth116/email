@@ -1,0 +1,92 @@
+<html>
+	<head>
+		<title>Sent Mail</title>
+		<link rel="stylesheet" href="/static/css/bootstrap.css">
+    <link rel="stylesheet" href="/static/style.css">
+		<script src="/static/js/bootstrap.js"></script>
+	</head>
+<body class="bg-black">
+	<header class="bg-black fixed-top">
+    <div class="py-2">
+	  <nav class="navbar navbar-expand-lg label bg-black" data-bs-theme="dark">
+	    <div class="container">
+		  <a class="navbar-brand fs-4 text-white" href="{% url 'userhome' %}"><span style="color: #ff7800;">MY</span> MAIL</a>
+			  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			  </button>
+			  <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
+				<ul class="navbar-nav mb-2 mb-lg-0">
+				  <li class="nav-item">
+					<a class="nav-link nav-color" aria-current="page" href="{% url 'userhome' %}">Home</a>
+				  </li>
+				  <li class="nav-item">
+					<a class="nav-link nav-color" href="#">About</a>
+				  </li>
+				  <li class="nav-item">
+					<a class="nav-link nav-color" href="#">Services</a>
+				  </li>
+				  <li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle nav-color" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+					  Factors
+					</a>
+					<ul class="dropdown-menu dropdown-menu-dark">
+					  <li><a class="dropdown-item" href="#">Hobby Factor</a></li>
+					  <li><a class="dropdown-item" href="#">Age Factor</a></li>
+					  <li><a class="dropdown-item" href="#">Season-Country Factor</a></li>
+					</ul>
+				  </li>
+				  <li class="nav-item">
+					<a class="nav-link nav-color" href="#">Contact</a>
+				  </li>
+				</ul>
+			  </div>
+			  <div class=""> 
+				<ul class="navbar-nav me-2">
+				  <li class="nav-item">
+					<a class="nav-link nav-color" href="#">Profile</a>
+				  </li>
+				  <li>
+					<a class="nav-link nav-color" href="{% url 'logout' %}">Log Out</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+	   </nav>
+	  </div>
+	</header>
+
+	<div class="bg-black">
+    <div class="container section-2"><h3 class="label col-orange text-center mb-5">Sent Mail</h3>
+      <table class="table table-responsive text-white">
+        <tr>
+          <th>Subject</th>
+          <th>Message</th>
+          <th>Receiver</th>
+          <th>Date</th>
+          <th>Time</th>
+          <th></th>
+        </tr>
+          {% for v in viewmessage %}
+	    <tr>
+          <td>{{v.subject}}</td>
+		  <td>{{v.message}}</td>
+		  <td>{{v.date}}</td>
+		  <td>{{v.time}}</td>
+          <td>{{v.receiverid.username}}</td>
+		  <td><a class="text-white" title="Delete" href="{% url 'deletemessage' v.id %}"><i class="fa-solid fa-trash-can"></i></a></td>
+        </tr>
+				  {% endfor %}
+      </table>
+    </div>
+	</div>
+  <div class="bg-black">
+    <footer class="container py-5 border-top border-light">
+      <div class="text-white text-center opacity-75">
+        <i class="fa-regular fa-copyright"></i> 2022 My Mail. All Rights Reserved
+      </div>
+    </footer>
+  </div>	
+  
+  <script src="https://kit.fontawesome.com/09fc86d1e6.js" crossorigin="anonymous"></script>  
+</body>
+</html>

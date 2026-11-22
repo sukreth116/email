@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/static/css/bootstrap.css">
+    <link rel="stylesheet" href="/static/style.css">
+	  <script src="/static/js/bootstrap.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400&display=swap" rel="stylesheet">
+</head>
+<script src="/static/jquery-1.8.3.min.js"></script>
+<script>
+$(document).ready(function(){
+	$("#country").change(function(){
+	var country = $("#country").val();
+	$.ajax({
+		url : "{% url 'getstate' %}",
+		data : {'country' : country},
+		success : function(data)
+		{
+			$("#state").html(data);
+		}
+	})
+	})
+	})
+</script>
+<body class="bg-black">
+  <header class="bg-black fixed-top">
+		<div class="py-2">
+		  	<nav class="navbar navbar-expand-lg label bg-black" data-bs-theme="dark">
+				<div class="container">
+			  		<a class="navbar-brand fs-4 text-white" href="{% url 'userhome' %}"><span style="color: #ff7800;">MY</span> MAIL</a>
+				  	<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+				  	</button>
+				  	<div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
+					  <ul class="navbar-nav mb-2 mb-lg-0">
+					  	<li class="nav-item">
+							<a class="nav-link nav-color" aria-current="page" href="{% url 'userhome' %}">Home</a>
+					  	</li>
+					  	<li class="nav-item">
+							<a class="nav-link nav-color" href="#">About</a>
+					  	</li>
+					  	<li class="nav-item">
+							<a class="nav-link nav-color" href="#">Services</a>
+					  	</li>
+					  	<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle nav-color" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+						  		Factors
+							</a>
+							<ul class="dropdown-menu dropdown-menu-dark">
+						  		<li><a class="dropdown-item" href="{% url 'customer_hobbyfactor' %}">Hobby Factor</a></li>
+						  		<li><a class="dropdown-item" href="{% url 'customer_agefactor' %}">Age Factor</a></li>
+						  		<li><a class="dropdown-item" href="{% url 'customer_seasoncountryfactor' %}">Season-Country Factor</a></li>
+							</ul>
+					  	</li>
+			  			<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle nav-color" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+				  				Message
+							</a>
+							<ul class="dropdown-menu dropdown-menu-dark">
+				  				<li><a class="dropdown-item" href="{% url 'new_message' %}">New Mail</a></li>
+				  				<li><a class="dropdown-item" href="{% url 'sent_message' %}">Sent Mail</a></li>
+				  				<li><a class="dropdown-item" href="{% url 'inbox' %}">Inbox</a></li>
+				  				<li><a class="dropdown-item" href="{% url 'view_spam_messages' %}">Spam</a></li>
+				  				<li><a class="dropdown-item" href="{% url 'trash' %}">Trash</a></li>
+							</ul>
+						</li>
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle nav-color" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+				  				Your Contacts
+							</a>
+							<ul class="dropdown-menu dropdown-menu-dark">
+				  				<li><a class="dropdown-item" href="{% url 'addcontact' %}">New Contact</a></li>
+				  				<li><a class="dropdown-item" href="{% url 'addblacklist' %}">Block Contact</a></li>
+				  				<li><a class="dropdown-item" href="{% url 'viewcontacts' %}">Contacts list</a></li>
+								  <li><a class="dropdown-item" href="{% url 'viewblacklist' %}">Blacklist</a></li>
+							</ul>
+						</li>
+					  	<li class="nav-item">
+							<a class="nav-link nav-color" href="#">Contact Us</a>
+					 	</li>
+					  </ul>
+				    </div>
+				  	<div class=""> 
+						<ul class="navbar-nav me-2">
+					  		<li class="nav-item">
+								<a class="nav-link nav-color" href="{% url 'update_user_profile' %}">Profile</a>
+					  		</li>
+					  		<li>
+								<a class="nav-link nav-color" href="{% url 'logout' %}">Log Out</a>
+					  		</li>
+						</ul>
+				  	</div>
+				</div>
+		    </nav>
+		</div>
+	</header>
+    <div class="section-2 text-white">
+        <div class="container w-50">
+				<form method="post" action="{% url 'update_user_profileAction' %}">
+          <div class="mb-5">
+            <h4 class="col-orange text-center label">Edit Your Profile</h4>
+          </div>
+					{% csrf_token %}
+            {% for v in view %}
+            <div class="row">
+              <div class="col-md-6">
+                <div class="mb-2">
+                    <label class="ms-2 mb-1">Name</label>
+                    <input type="text" name="name" class="form-control bg-dark text-white mb-2" value="{{v.name}}" placeholder="Name">
+                    <label class="ms-2 mb-1">Phone</label>
+                    <input type="text" name="phone" class="form-control bg-dark text-white" value="{{v.phone}}" placeholder="Phone">
+                </div>            
+                <div class="mb-2">
+                  <label class="ms-2 mb-1">Address</label>
+                    <textarea name="address" class="form-control bg-dark text-white" cols="30" rows="5" placeholder="Your address">{{v.address}}</textarea>
+                </div>
+                
+                <div class="mb-2">
+                    <label class="ms-2 mb-1">Country</label>
+                    <select name="country" id="country" class="form-select form-control bg-dark text-white" aria-label="">
+                        <option value="{{v.countryid}}">{{v.countryid.countryname}}</option>
+                        {% for c in countries %}
+		                <option value="{{c.id}}">{{c.countryname}}</option>
+		                    {% endfor %}
+                    </select>
+                </div>
+                <div class="mb-2">
+                  <label class="ms-2 mb-1">State</label>
+                    <select name="state" id="state" class="form-select form-control bg-dark text-white" aria-label="">
+                        <option value="">{{v.stateid.statename}}</option>
+                    </select>
+                </div>
+                <div class="mb-2">
+                  <label class="ms-2 mb-1">Security Question</label>
+                    <select name="securityquestion" class="form-select form-control bg-dark text-white">
+                        <option value="{{v.security_questions}}">{{v.security_questions}}</option>
+                        <option value="Father Name">Father Name</option>	
+                        <option value="Mother Name">Mother Name</option>	
+                        <option value="Favorite Sport">Favorite Sport</option>	
+                        <option value="Favorite Movie">Favorite Movie</option>
+                        <option value="Lucky Number">Lucky Number</option>	
+                    </select>
+                </div>
+                <div class="mb-2">
+                  <label class="ms-2 mb-1">Answer</label>
+                    <input type="text" class="form-control bg-dark text-white" name="answer" value="{{v.answers}}" placeholder="Answer">
+                </div>
+              </div>
+              <div class="col-md-6 pt-2">
+                <div class="row mt-5 ms-2">
+                  <div class="col-md-2">Gender</div>
+                  <div class="col-md-10 ps-5">
+                    {% if v.gender == 'male' %}
+                    <input type="radio" class="form-check-input" name="gender" value="male" checked="true"> Male <br>
+                    <input type="radio" class="form-check-input" name="gender" value="female"> Female                        
+                    {% else %}                   
+                    <input type="radio" class="form-check-input" name="gender" value="male"> Male <br>
+                    <input type="radio" class="form-check-input" name="gender" value="female" checked="true"> Female
+                    {% endif %}
+                  </div>
+                </div>
+                <div class="row mt-5 ms-2">
+                    <div class="col-md-2">Hobbies</div>
+                    <div class="col-md-10 ps-5">
+                      {% for s in hobby %}
+                      <div><input type="checkbox" class="form-check-input" {% for h in userhobby %} name="hobbies" value="{{s.id}}"
+                      {% if s.id == h.hobbyid.id %} 
+                      checked = "true" 
+                      {% endif %} 
+                      {% endfor %}>
+                      {{s.hobby}}
+                      </div>
+                      {% endfor %}
+                    </div>
+                    
+                </div>
+                <div class="mt-5">
+                    <label for="dob" class="ms-3">Date of Birth</label>
+                    <input type="date" name="dob" value="{{v.dob}}" class="form-control bg-dark text-white">
+                </div>
+                <div class="mt-3">
+                  <label class="ms-2 mb-1">Username</label>
+                    <input type="text" class="form-control bg-dark text-white" name="username" value="{{v.username}}" id="username" placeholder="Username">
+                </div>
+                <div class="mt-3 mb-4">
+                  <label class="ms-2 mb-1">Password</label>
+                    <input type="password" class="form-control bg-dark text-white" name="password" value="{{v.password}}" id="password" title="Password" placeholder="Password">
+                </div>
+              </div>
+              <div class="mt-5 d-flex justify-content-evenly">
+                <button class="btn btn1" type="submit">Update</button>
+              </div>
+              {% endfor %}
+          </div>  
+				</form>
+      </div>
+    </div>
+	</div>
+    
+
+    <script src="https://kit.fontawesome.com/09fc86d1e6.js" crossorigin="anonymous"></script>
+</body>
+</html>

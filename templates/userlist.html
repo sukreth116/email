@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/static/css/bootstrap.css">
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="/static/js/bootstrap.js"></script>
+</head>
+<body class="bg-black">
+  <header class="fixed-top bg-black">
+    <div class="py-2">
+      <nav class="navbar navbar-expand-lg label bg-black" data-bs-theme="dark">
+        <div class="container">
+          <a class="navbar-brand fs-4 text-white" href="{% url 'siteadminhome' %}"><span style="color: #ff7800;">MY</span> MAIL</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
+            <ul class="navbar-nav mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link nav-color" aria-current="page" href="{% url 'siteadminhome' %}">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link nav-color" href="{% url 'userlist' %}">User List</a>
+              </li>
+            </ul>
+          </div>
+          <div class=""> 
+            <ul class="navbar-nav me-2">
+              <li class="nav-item">
+                <a class="nav-link nav-color" href="{% url 'logout' %}">Log Out</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>
+  <div class="container section-2 ">
+    <h3 class="text-center col-orange label mb-5">User List</h3>
+    <table class="table text-white table-responsive">
+      <tr>
+        <th>Name</th>
+        <th>Address</th>
+        <th>Gender</th>
+        <th>Phone</th>
+        <th>Date of Birth</th>
+        <th>Username</th>
+        <th>Country</th>
+        <th>State</th>
+        <th></th>
+      </tr>
+        {% for v in view %}
+      <tr>
+        <td>{{v.name}}</td>
+        <td>{{v.address}}</td>
+        <td>{{v.gender}}</td>
+        <td>{{v.phone}}</td>
+        <td>{{v.dob}}</td>
+        <td>{{v.username}}</td>
+        <td>{{v.countryid.countryname}}</td>
+        <td>{{v.stateid.statename}}</td>
+        <td><a href="{% url 'deleteuser' v.id %}" class="text-white"><i class="fa-solid fa-trash-can"></i></a></button></td>
+      </tr>
+        {% endfor %}
+    </table>
+  </div>
+  <footer class="container py-5 border-top border-light">
+    <div class="text-white text-center opacity-75">
+      <i class="fa-regular fa-copyright"></i> 2022 My Mail. All Rights Reserved
+    </div>
+  </footer>
+  <script src="https://kit.fontawesome.com/09fc86d1e6.js" crossorigin="anonymous"></script>
+</body>
+</html>

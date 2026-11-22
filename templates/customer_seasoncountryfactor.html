@@ -1,0 +1,106 @@
+<html>
+  <head>
+    <title>Hobby Factor</title>
+    <link rel="stylesheet" href="/static/css/bootstrap.css">
+    <link rel="stylesheet" href="/static/style.css">
+		<script src="/static/js/bootstrap.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400&display=swap" rel="stylesheet">
+	</head>
+<body class="bg-black">
+  <header class="bg-black fixed-top">
+		<div class="py-2">
+		  	<nav class="navbar navbar-expand-lg label bg-black" data-bs-theme="dark">
+				<div class="container">
+			  		<a class="navbar-brand fs-4 text-white" href="{% url 'userhome' %}"><span style="color: #ff7800;">MY</span> MAIL</a>
+				  	<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+				  	</button>
+				  	<div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
+					  <ul class="navbar-nav mb-2 mb-lg-0">
+					  	<li class="nav-item">
+							<a class="nav-link nav-color" aria-current="page" href="{% url 'userhome' %}">Home</a>
+					  	</li>
+					  	<li class="nav-item">
+							<a class="nav-link nav-color" href="#">About</a>
+					  	</li>
+					  	<li class="nav-item">
+							<a class="nav-link nav-color" href="#">Services</a>
+					  	</li>
+					  	<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle nav-color" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+						  		Factors
+							</a>
+							<ul class="dropdown-menu dropdown-menu-dark">
+						  		<li><a class="dropdown-item" href="{% url 'customer_hobbyfactor' %}">Hobby Factor</a></li>
+						  		<li><a class="dropdown-item" href="{% url 'customer_agefactor' %}">Age Factor</a></li>
+						  		<li><a class="dropdown-item" href="{% url 'customer_seasoncountryfactor' %}">Season-Country Factor</a></li>
+							</ul>
+					  	</li>
+			  			<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle nav-color" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+				  				Message
+							</a>
+							<ul class="dropdown-menu dropdown-menu-dark">
+				  				<li><a class="dropdown-item" href="{% url 'new_message' %}">New Mail</a></li>
+				  				<li><a class="dropdown-item" href="{% url 'sent_message' %}">Sent Mail</a></li>
+				  				<li><a class="dropdown-item" href="{% url 'inbox' %}">Inbox</a></li>
+				  				<li><a class="dropdown-item" href="{% url 'view_spam_messages' %}">Spam</a></li>
+				  				<li><a class="dropdown-item" href="{% url 'trash' %}">Trash</a></li>
+							</ul>
+						</li>
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle nav-color" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+				  				Your Contacts
+							</a>
+							<ul class="dropdown-menu dropdown-menu-dark">
+				  				<li><a class="dropdown-item" href="{% url 'addcontact' %}">New Contact</a></li>
+				  				<li><a class="dropdown-item" href="{% url 'addblacklist' %}">Block Contact</a></li>
+				  				<li><a class="dropdown-item" href="{% url 'viewcontacts' %}">Contacts list</a></li>
+								  <li><a class="dropdown-item" href="{% url 'viewblacklist' %}">Blacklist</a></li>
+							</ul>
+						</li>
+					  	<li class="nav-item">
+							<a class="nav-link nav-color" href="#">Contact Us</a>
+					 	</li>
+					  </ul>
+				    </div>
+				  	<div class=""> 
+						<ul class="navbar-nav me-2">
+					  		<li class="nav-item">
+								<a class="nav-link nav-color" href="{% url 'update_user_profile' %}">Profile</a>
+					  		</li>
+					  		<li>
+								<a class="nav-link nav-color" href="{% url 'logout' %}">Log Out</a>
+					  		</li>
+						</ul>
+				  	</div>
+				</div>
+		    </nav>
+		</div>
+	</header>      
+  <div class="container w-25 section-2">
+    <form method="post" action="{% url 'customer_seasoncountryfactorAction' %}">
+      {% csrf_token %}
+      <div class="pt-4 mb-5">
+        <h2 class="label col-orange text-center">Season Country Factor</h2>
+      </div>
+      <div class="mb-5">
+        <select name="seasonfactor" class="form-control">
+          <option value="">--select--</option>
+            {% for v in view %}
+          <option value={{v.season_factorid.id}}>{{v.season_factorid.seasonfactor}}</option>
+            {% endfor %}
+        </select>
+      </div>
+      <div class="d-flex justify-content-evenly">
+        <button class="btn btn1 text-white">Submit</button>
+      </div>
+    </form>
+  </div>
+  <footer class="container fixed-bottom py-5 border-top border-light">
+    <div class="text-white text-center opacity-75">
+      <i class="fa-regular fa-copyright"></i> 2022 My Mail. All Rights Reserved
+    </div>
+  </footer>
+</body>
+</html>

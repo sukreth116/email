@@ -1,0 +1,186 @@
+<html>
+	<head>
+    <title>Registration</title>
+		<link rel="stylesheet" href="/static/css/bootstrap.css">
+    <link rel="stylesheet" href="/static/style.css">
+		<script src="/static/jquery-1.8.3.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400&display=swap" rel="stylesheet">
+	</head>
+	<script>
+		$(document).ready(function(){
+		$("#country").change(function(){
+		var country = $("#country").val();
+		$.ajax({
+			url : "{% url 'getstate' %}",
+			data : {'country' : country},
+			success : function(data)
+			{
+				$("#state").html(data);
+			}
+		})
+		})
+		})
+		</script>
+	
+		<script>
+		$(document).ready(function(){
+		$("#username").change(function(){
+		var username = $("#username").val();
+		$.ajax({
+			url : "{% url 'checkusername' %}",
+			data : {'usernameid' : username},
+			success : function(data){
+			if(data.valid == "exist")
+			{
+				alert("username already exist")
+				$("#username").val();	
+			}
+		}
+		})
+		})	
+		})
+		</script>
+
+<body>
+	<div>
+        <header class="bg-black fixed-top">
+            <div class="py-2">
+              <nav class="navbar navbar-expand-lg bg-black label" data-bs-theme="dark">
+                <div class="container">
+                  <a class="navbar-brand fs-4 text-white" href="{% url 'index' %}"><span style="color: #ff7800;">MY</span> MAIL</a>
+                  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                  </button>
+                  <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
+                    <ul class="navbar-nav mb-2 mb-lg-0">
+                      <li class="nav-item">
+                        <a class="nav-link nav-color" aria-current="page" href="{% url 'index' %}">Home</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link nav-color" href="#">About</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link nav-color" href="#">Services</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link nav-color" href="#">Contact</a>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class=""> 
+                    <ul class="navbar-nav me-2">
+                      <li class="nav-item">
+                        <a class="nav-link nav-color" href="{% url 'userregister' %}">Sign Up</a>
+                      </li>
+                      <li>
+                        <a class="nav-link nav-color" href="{% url 'login' %}">Sign In</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </nav>
+            </div>
+          </header>
+    </div>
+
+    <div class="section-2 bg-black text-white">
+	    <div class="container w-50">
+        <div class="pb-4">
+            <h2 class="col-orange text-center label">SIGN UP</h2>
+        </div>
+        <form method="post" action="{% url 'userRegisterAction' %}">
+          {% csrf_token %}
+          <div class="row">
+            <div class="col-md-6">
+              <div class="mb-3">
+                <input type="text" name="name" class="form-control bg-dark text-white" placeholder="Name" required>
+                <div class="invalid-feedback">
+                  Choose a name!
+                </div>
+              </div>
+              <div class="mb-3">
+                <input type="text" name="phone" class="form-control bg-dark text-white" placeholder="Phone" required>
+              </div>     
+              <div class="mb-3">
+                <textarea name="address" class="form-control bg-dark text-white" cols="30" rows="5" placeholder="Your address"></textarea>
+              </div>
+              <div class="mb-3">
+                <select name="country" id="country" class="form-control form-select bg-dark text-white" required>
+                  <option value="">Select your country</option>
+                    {% for c in country %}
+		              <option value="{{c.id}}">{{c.countryname}}</option>
+		                {% endfor %}
+                </select>
+              </div>
+              <div class="mb-3">
+                <select name="state" id="state" class="form-control form-select bg-dark text-white" required>
+                  <option value="">Select your state</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <select name="securityquestion" class="form-control form-select bg-dark text-white" required>
+                  <option value="">Security Questions</option>
+                  <option value="Father Name">Father Name</option>	
+                  <option value="Mother Name">Mother Name</option>	
+                  <option value="Favorite Sport">Favorite Sport</option>	
+                  <option value="Favorite Movie">Favorite Movie</option>
+                  <option value="Lucky Number">Lucky Number</option>	
+                </select>
+              </div>
+              <div class="mb-3">
+                <input type="text" class="form-control bg-dark text-white" name="answer" placeholder="Answer" required>
+              </div>
+            </div>
+            <div class="col-md-6">
+                <div class="row mb-4 ms-2">
+                  <div class="col-md-2">Gender</div>
+                  <div class="col-md-10 ps-5">
+                    <input type="radio" name="gender" class="form-check-input" required>
+                    <label for="gender" class="form-check-label">Female</label><br>
+                    <input type="radio" name="gender" class="form-check-input" required>
+                    <label for="gender" class="form-check-label">Male</label>
+                  </div>  
+                </div>
+                <div class="row mb-5 ms-2">
+                  <div class="col-md-2">
+                    Hobbies
+                  </div>
+                  <div class="col-md-10 ps-5">
+                    {% for v in hobby %}
+	                  <div><input type="checkbox" class="form-check-input" name="checkbox" value="{{v.id}}" required> {{v.hobby}}</div>
+	                  {% endfor %}
+                  </div>
+                  
+                </div>
+                <div class="mb-3">
+                    <label for="dob" class="ms-3">Date of Birth</label>
+                    <input type="date" name="dob" class="form-control bg-dark text-white" required>
+                </div>
+                <div class="mb-3">
+                    <input type="email" class="form-control bg-dark text-white" name="username" id="username" placeholder="Create an Email" required>
+                </div>
+                <div class="mb-3">
+                    <input type="password" class="form-control bg-dark text-white" name="password" id="password" title="Password" placeholder="Password" required>
+                </div>
+            </div>
+            <div class="mt-4 d-flex justify-content-evenly">
+                <button class="btn btn1" type="submit">Sign Up</button>
+            </div>
+          </div>
+		    </form>
+	    </div>
+    </div>
+
+    <div class="bg-black">
+      <footer class="container py-5 border-top border-light">
+        <div class="text-white text-center opacity-75">
+          <i class="fa-regular fa-copyright"></i> 2022 My Mail. All Rights Reserved
+        </div>
+      </footer>
+    </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/09fc86d1e6.js" crossorigin="anonymous"></script>
+</body>
+</html>

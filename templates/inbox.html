@@ -1,0 +1,101 @@
+<html>
+	<head>
+		<title>Inbox</title>
+		<link rel="stylesheet" href="/static/css/bootstrap.css">
+    	<link rel="stylesheet" href="/static/style.css">
+		<script src="/static/js/bootstrap.js"></script>
+		<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400&display=swap" rel="stylesheet">
+	</head>
+<body class="bg-black">
+  <header class="bg-black fixed-top">
+    <div class="py-2">
+	  <nav class="navbar navbar-expand-lg label bg-black" data-bs-theme="dark">
+	    <div class="container">
+		  <a class="navbar-brand fs-4 text-white" href="{% url 'userhome' %}"><span style="color: #ff7800;">MY</span> MAIL</a>
+			  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			  </button>
+			  <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
+				<ul class="navbar-nav mb-2 mb-lg-0">
+				  <li class="nav-item">
+					<a class="nav-link nav-color" aria-current="page" href="{% url 'userhome' %}">Home</a>
+				  </li>
+				  <li class="nav-item">
+					<a class="nav-link nav-color" href="#">About</a>
+				  </li>
+				  <li class="nav-item">
+					<a class="nav-link nav-color" href="#">Services</a>
+				  </li>
+				  <li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle nav-color" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+					  Factors
+					</a>
+					<ul class="dropdown-menu dropdown-menu-dark">
+					  <li><a class="dropdown-item" href="#">Hobby Factor</a></li>
+					  <li><a class="dropdown-item" href="#">Age Factor</a></li>
+					  <li><a class="dropdown-item" href="#">Season-Country Factor</a></li>
+					</ul>
+				  </li>
+				  <li class="nav-item">
+					<a class="nav-link nav-color" href="#">Contact</a>
+				  </li>
+				</ul>
+			  </div>
+			  <div class=""> 
+				<ul class="navbar-nav me-2">
+				  <li class="nav-item">
+					<a class="nav-link nav-color" href="#">Profile</a>
+				  </li>
+				  <li>
+					<a class="nav-link nav-color" href="{% url 'logout' %}">Log Out</a>
+				  </li>
+				</ul>
+			  </div>
+			</div>
+	   </nav>
+	  </div>
+	</header>
+	
+	<div class="bg-black">
+    <div class="container section-2"><h3 class="label col-orange text-center mb-5">Inbox</h3>
+			<form action="{% url 'move_to_trash' %}" method="post">
+				{% csrf_token %}
+          <table class="table table-responsive text-white">
+            <tr>
+              <th>Date</th>
+              <th>Time</th>
+              <th>Subject</th>
+					    <th>Message</th>
+					    <th>Sender</th>
+					    <th></th>
+					    <th></th>
+					    <th></th>
+            </tr>
+            {% for v in viewmessage %}
+				    <tr>
+					    <td>{{v.date}}</td>
+					    <td>{{v.time}}</td>
+					    <td>{{v.subject}}</td>
+					    <td>{{v.message}}</td>
+					    <td>{{v.senderid.username}}</td>
+					    <td><a href="{% url 'forward' v.id %}" class="text-white" title="Forward"><i class="fa-solid fa-paper-plane"></i></a></td>
+					    <td><a href="{% url 'reply' v.id %}" class="text-white" title="Reply"><i class="fa-solid fa-reply"></i></a></td>
+					    <td><input type="checkbox" name="checkbox" class="form-check-input" value="{{v.id}}" title="Select"></td>
+				    </tr>
+				    {% endfor %}
+          </table>
+			  <div class="d-flex justify-content-evenly pt-5"><button type="submit" class="btn btn1" title="Move to trash selected item">Move to trash <i class="fa-solid fa-trash"></i></button></div>
+			</form>
+    </div>
+	</div>
+  <div class="bg-black">
+    <footer class="container py-5 border-top border-light">
+      <div class="text-white text-center opacity-75">
+        <i class="fa-regular fa-copyright"></i> 2022 My Mail. All Rights Reserved
+      </div>
+    </footer>
+  </div>
+
+  <script src="https://kit.fontawesome.com/09fc86d1e6.js" crossorigin="anonymous"></script>
+</body>
+</html>
